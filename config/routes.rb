@@ -70,7 +70,7 @@ Fedena::Application.routes.draw do
         get :show_event_tooltip
       end
     end
-
+    resources :cce_reports
     resources :cce_exam_categories
 
     resources :cce_grade_sets do
@@ -937,6 +937,7 @@ Fedena::Application.routes.draw do
         get :change_password
         post :change_password
         get :first_login_change_password
+        post :first_login_change_password
       end
     end
 

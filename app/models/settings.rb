@@ -74,8 +74,10 @@ class Settings < ActiveRecord::Base
     end
 
     def set_value(key, value)
-      if key.upcase == "GPA" || "CWA" || "CCE"
+      if key.upcase == "GPA" || key.upcase == "CWA" || key.upcase == "CCE"
         key = key.upcase
+      else
+        key=key
       end
       config = find_by_config_key(key)
       config.nil? ?
