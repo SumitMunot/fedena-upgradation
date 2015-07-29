@@ -1,5 +1,4 @@
 WickedPdf.config = {
-    :wkhtmltopdf => '/opt/wkhtmltopdf',
     :layout => "pdf.html",
     :margin => {    :top=> 40,
                     :bottom => 20,

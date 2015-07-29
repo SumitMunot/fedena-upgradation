@@ -1,0 +1,6 @@
+- if @error.blank?
+  $('#form-errors').html('');
+  $('#flash_box').html("#{j content_tag :p, t('master_category_created_sucessfully'), class: 'flash-msg'}")
+  $('#modal-box').modalBox('close');
+- else
+  $('#form-errors').html("#{j render 'errors', errors: @finance_fee_category}")
