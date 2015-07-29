@@ -42,6 +42,7 @@ gem 'ransack'
 # gem 'debugger', group: [:development, :test]
 
 gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 gem 'declarative_authorization'
 gem 'ruby_parser'
 gem "iconv", "~> 1.0.3"
@@ -62,6 +63,8 @@ gem 'annotate', '~> 2.6.6'
 group :development do
   gem 'pry'
   gem 'spring'
+  gem "better_errors"
+  gem 'quiet_assets'
 end
 
 group :test do

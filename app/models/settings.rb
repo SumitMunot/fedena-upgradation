@@ -74,10 +74,15 @@ class Settings < ActiveRecord::Base
     end
 
     def set_value(key, value)
+      if key.upcase == "GPA" || key.upcase == "CWA" || key.upcase == "CCE"
+        key = key.upcase
+      else
+        key=key
+      end
       config = find_by_config_key(key)
       config.nil? ?
-        Settings.create(config_key: key, config_value: value) :
-        config.update_attribute(:config_value, value)
+      Settings.create(config_key: key, config_value: value) :
+      config.update_attribute(:config_value, value)
     end
 
     def get_multiple_configs_as_hash(keys)
@@ -100,6 +105,7 @@ class Settings < ActiveRecord::Base
     def set_grading_types(updates)
       #expects an array of integers types
       grading_types = Course::GRADINGTYPES
+      updates.inject({}){|caps_hash,og_hash| caps_hash.merge(og_hash[0].upcase => og_hash[1] ) }
       deletions = grading_types.keys - updates
       updates.each do |t|
         find_or_create_by_config_key(grading_types[t]).update_attribute(:config_value, 1)
