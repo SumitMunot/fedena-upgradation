@@ -27,31 +27,25 @@
     .show-msg
       .flash-msg= flash[:notice]
   #search-form
-    = form_for @search do |f|
+    = form_for :search, path: students_path , method: :POST do |f|
       .label-field-pair
         %label{:for => "name"}= t('name')
         .text-input-bg
-          = f.text_field :first_name_or_middle_name_or_last_name_like
+          = f.text_field :first_name #_or_middle_name_or_last_name_like
       .label-field-pair
         %label{:for => "student_admission_no"}= t('admission_number')
         .text-input-bg
-          = f.text_field :admission_no_equals
+          = f.text_field :admission_no #_equals
       .label-field-pair
         %label{:for => "student_course"}
           = t('course_text')
-          = image_tag("loader.gif",     |
-            :align => "absmiddle",      |
-            :border => 0,               |
-            :id => "loader",            |
-            :style =>"display: none;" ) |
+          = image_tag("loader.gif", align: :absmiddle, border: 0, id: :loader, style: "display: none;" )
         .text-input-bg
-          = select :advv_search, :course_id, Course.active.map{|c| [c.course_name+" "+c.section_name, c.id]}, |
-            {:prompt=>"#{t('select_a_course')}"},                                                             |
-            {:onChange => "onChangeRequest(this, '#{url_for(action: :list_batches, course_id: 'paramid')}')"}
+          = select :advv_search, :course_id, Course.active.map{|c| [ "#{c.course_name } #{c.section_name}", c.id]}, { prompt: t('select_a_course') }, { onChange: "onChangeRequest(this, '#{url_for(action: :list_batches, course_id: 'paramid')}')" }
       #course_batches.label-field-pair
         %label{:for => "student_batch"}= t('batch')
         .text-input-bg
-          = select :search,:batch_id_equals, @batches.map{|c| [c.name, c.id]},{:prompt=>"#{t('select_batch')}"}
+          = select :search, :batch_id_equals, @batches.map{|c| [c.name, c.id]},{:prompt=>"#{t('select_batch')}"}
       .label-field-pair
         %label{:for => "student_category"}= t('category')
         .text-input-bg
@@ -70,57 +64,47 @@
         .text-input-bg
           = select :search, :blood_group_like, ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],{:prompt=>"#{t('select')}"}
       .label-field-pair
-        %label{:for => "student_country"}
+        %label{ for: :student_country }
           = t('country')
         .text-input-bg
-          = f.collection_select :nationality_id_equals, Country.all,:id,:name,{:prompt=>"#{t('select')}"}
+          = f.collection_select :nationality_id_equals, Country.all,:id,:name,{ prompt: t('select') }
       .label-field-pair
-        %label{:for => "student_grade"}= t('admission_date')
+        %label{ for: :student_grade }= t('admission_date')
         .text-input-bg
-          = select :advv_search,:doa_option,[["#{t('equal_to')}","Equal to"],["#{t('less_than')}","Less than"],["#{t('greater_than')}","Greater than"]],{:prompt=>"#{t('option')}"}, |
-            {:onChange => "onChangeRequest(this, '#{url_for(action: :list_doa_year, doa_option: 'paramid')}')"}
+          = select :advv_search,:doa_option,[ [ t('equal_to'),"Equal to" ],[ t('less_than'),"Less than"],[ t('greater_than'), "Greater than"]],{ prompt: t('option') }, { onChange: "onChangeRequest(this, '#{url_for(action: :list_doa_year, doa_option: 'paramid')}')"}
 
-          = image_tag("loader.gif",     |
-            :align => "absmiddle",      |
-            :border => 0,               |
-            :id => "loader",            |
-            :style =>"display: none;" ) |
+          = image_tag("loader.gif", align: :absmiddle, border: 0, id: :loader, style: "display: none;" )
           #doa_year
-            = select :advv_search,:doa_year,[],{:prompt=>"#{t('select')}"}
+            = select :advv_search,:doa_year, [] , { prompt: t('select') }
           #doa_year_hidden
       .label-field-pair
-        %label{:for => "student_birth_date"}= t('birth_date')
+        %label{ for: :student_birth_date }= t('birth_date')
         .text-input-bg
-          = select :advv_search,:dob_option,[["#{t('equal_to')}","Equal to"],["#{t('less_than')}","Less than"],["#{t('greater_than')}","Greater than"]],{:prompt=>"#{t('option')}"}, |
-            {:onChange => "onChangeRequest(this, '#{url_for(action: :list_dob_year, dob_option: 'paramid')}')"}
-          = image_tag("loader.gif",     |
-            :align => "absmiddle",      |
-            :border => 0,               |
-            :id => "loader",            |
-            :style =>"display: none;" ) |
+          = select :advv_search,:dob_option,[[ t('equal_to'),"Equal to"],[ t('less_than'),"Less than"],[ t('greater_than'),"Greater than"]],{ prompt: t('option') }, { onChange: "onChangeRequest(this, '#{url_for(action: :list_dob_year, dob_option: 'paramid')}')"}
+          = image_tag("loader.gif", align: :absmiddle, border: 0, id: :loader, style: "display: none;" )
           #dob_year
-            = select :advv_search,:dob_year,[],{:prompt=>"#{t('select')}"}
+            = select :advv_search,:dob_year,[],{ prompt: t('select') }
           #dob_year_hidden
       .label_field_pair
-        %label.label_for_student{:for => "student_gender"}= t('status')
+        %label.label_for_student{ for: :student_gender }= t('status')
         .student_gender_value
-          = f.radio_button  :is_active_equals, "true", {:checked => 'checked'}
-          %label.label_for_gender{:for => "student_gender_true"}= t('present')
+          = f.radio_button  :is_active_equals, "true", { checked: :checked}
+          %label.label_for_gender{ for: :student_gender_true }= t('present')
           = f.radio_button  :is_active_equals, "false"
-          %label.label_for_gender{:for => "student_gender_false"}= t('former')
-          = f.radio_button  :is_active_equals, "", {:checked => false}
-          %label.label_for_gender{:for => "student_gender_false"}= t('all')
-      = f.submit "#{t('search_text')}", :class=>'submit'
+          %label.label_for_gender{ for: :student_gender_false }= t('former')
+          = f.radio_button  :is_active_equals, "", { checked: false}
+          %label.label_for_gender{for: :student_gender_false}= t('all')
+      = f.submit t('search_text'), class: :submit
   - unless @students.nil?
-    - @students= @students.to_a.sort_by{|s| s.first_name}
+    - @students = @students.to_a.sort_by{|s| s.first_name}
     :javascript
       Event.observe(window, 'load', function() { $('search-form').hide(); });
     #search-result
       %p= t('searched_for')
       .search-again
-        = link_to "►#{t('search_again')}", {:action=>"advanced_search"}, :class => 'user_button'
+        = link_to "►#{t('search_again')}", { action: :advanced_search }, class: :user_button
         - unless @students.empty?
-          = link_to "► #{t('view')} #{t('pdf_report')}",   {:action => "advanced_search_pdf", :search=> params[:search],:advv_search=>params[:advv_search],:adv_search=>params[:adv_search]}, :target => '_blank' , :class=> 'user_button'
+          = link_to "► #{t('view')} #{t('pdf_report')}", {:action => "advanced_search_pdf", :search=> params[:search],:advv_search=>params[:advv_search],:adv_search=>params[:adv_search]}, :target => '_blank' , :class=> 'user_button'
       .extender
       .searched_for.themed_text
         = @searched_for

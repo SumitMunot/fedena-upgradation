@@ -26,6 +26,7 @@ class SmsController < ApplicationController
     @parents_sms_enabled = SmsSetting.find_by_settings_key("ParentSmsEnabled")
     @students_sms_enabled = SmsSetting.find_by_settings_key("StudentSmsEnabled")
     @employees_sms_enabled = SmsSetting.find_by_settings_key("EmployeeSmsEnabled")
+    render layout: 'application'
   end
 
   def settings
@@ -39,7 +40,9 @@ class SmsController < ApplicationController
     @employees_sms_enabled = SmsSetting.find_by_settings_key("EmployeeSmsEnabled")
     if request.post?
       SmsSetting.update(@application_sms_enabled.id,:is_enabled=>params[:sms_settings][:application_enabled])
-      redirect_to :action=>"settings"
+      redirect_to action: :settings
+    else
+      render layout: 'application'
     end
   end
 

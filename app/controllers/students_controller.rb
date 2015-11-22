@@ -77,11 +77,11 @@ class StudentsController < ApplicationController
             Delayed::Job.enqueue(SmsManager.new(message,recipients))
           end
         end
-	     flash[:notice] = "#{t('student.flash8')}"
-        redirect_to:action => "admission2", :id => @student
+	      flash[:notice] = t('student.flash8')
+        redirect_to action: :admission2, id: @student
       end
     else
-      render layout: 'application_sms_active'
+      render layout: 'application'
     end
   end
 
@@ -660,6 +660,8 @@ class StudentsController < ApplicationController
     if request.post? and @student_category.save
       flash[:notice] = t('student.flash7')
       redirect_to :action => 'categories'
+    else
+      render layout: 'application'
     end
   end
 
@@ -760,6 +762,10 @@ class StudentsController < ApplicationController
       else
         @searched_for += "<span>#{t('all_students')}</span>"
       end
+    end
+    if request.post?
+    else
+      render layout: 'application'
     end
   end
 

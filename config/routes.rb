@@ -759,6 +759,7 @@ Fedena::Application.routes.draw do
         post :categories
         get :add_additional_details
         post :add_additional_details
+        post :advanced_search
         get :save_previous_subject
         post :save_previous_subject
         get :search_ajax

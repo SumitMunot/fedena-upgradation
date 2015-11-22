@@ -23,6 +23,10 @@ class ConfigurationController < ApplicationController
   FILE_EXTENSIONS = [".jpg",".jpeg",".png"]#,".gif",".png"]
   FILE_MAXIMUM_SIZE_FOR_FILE=1048576
 
+  def index
+    render layout: 'application'
+  end
+
   def settings
     @config = Settings.get_multiple_configs_as_hash ['InstitutionName', 'InstitutionAddress', 'InstitutionPhoneNo', \
         'StudentAttendanceType', 'CurrencyType', 'ExamResultType', 'AdmissionNumberAutoIncrement','EmployeeNumberAutoIncrement', \

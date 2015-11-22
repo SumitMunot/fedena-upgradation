@@ -23,11 +23,13 @@ class CoursesController < ApplicationController
 
   def index
     @courses = Course.active
+    render layout: 'application'
   end
 
   def new
     @course = Course.new
     @grade_types=Course.grading_types_as_options
+    render layout: 'application'
     #    gpa = Settings.find_by_config_key("GPA").config_value
     #    if gpa == "1"
     #      @grade_types << "GPA"
@@ -40,6 +42,7 @@ class CoursesController < ApplicationController
 
   def manage_course
     @courses = Course.active
+    render layout: 'application'
   end
 
   def assign_subject_amount
@@ -233,15 +236,15 @@ class CoursesController < ApplicationController
   def find_course
     @course = Course.find params[:id]
   end
-  
+
   def batch_group_params
     params.require(:batch_group).permit(:name, :course_id) if params[:batch_group]
   end
-  
+
   def subject_amount_params
     params.require(:subject_amount).permit(:amount, :code) if params[:subject_amount]
   end
-  
+
   def course_params
     params[:batch] = params[:course] if params[:course]
     params.require(:batch).permit(:course_name, :code, :section_name, :is_deleted, :grading_type) if params[:batch]

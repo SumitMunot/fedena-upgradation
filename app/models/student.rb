@@ -63,6 +63,8 @@
 
 class Student < ActiveRecord::Base
 
+  attr_accessor :batch_id_equals, :student_category_id_equals, :gender_equals, :blood_group_like,
+                :nationality_id_equals, :is_active_equals
   include CceReportMod
 
   belongs_to :country
@@ -134,6 +136,7 @@ class Student < ActiveRecord::Base
   end
 
   def self.search(params)
+    new(params)
   end
 
   def create_user_and_validate
