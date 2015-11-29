@@ -16,8 +16,13 @@
 - #KIND, either express or implied.  See the License for the
 - #specific language governing permissions and limitations
 - #under the License.
-= select  :fees_defaulters, :dates_id, @dates.map { |e| [e.full_name, e.id]},    |
-  {:prompt => "#{t('select_fee_collection_date')}"},                             |
-  {:onChange => "#{remote_function( :url =>                                      |
-  {:action => "fees_defaulters_students"},                                       |
-  :with => "'date='+value+'&batch_id='+$('fees_defaulters_batch_id').value") }"} |
+
+
+= select :fees_defaulters, :dates_id, @dates.map { |e| [e.full_name, e.id]}, {:prompt => "#{t('select_fee_collection_date')}"}, { onChange: "onChangeRequest(this, '#{url_for(action: :fees_defaulters_students, id: 'paramid')}')" }
+
+/ = select  :fees_defaulters, :dates_id, @dates.map { |e| [e.full_name, e.id]},    |
+/ -  {:prompt => "#{t('select_fee_collection_date')}"},                             |
+/ -  {:onChange => "#{remote_function( :url =>                                      |
+/ -  {:action => "fees_defaulters_students"},                                       |
+/ -  :with => "'date='+value+'&batch_id='+$('fees_defaulters_batch_id').value") }"} |
+/ +

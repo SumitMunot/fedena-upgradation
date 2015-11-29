@@ -28,9 +28,9 @@
       %p.flash-msg= flash[:notice]
     .link-box
       .link-heading
-        = link_to "#{t('fees_submission_by_course')}", :action => "fees_submission_batch"
+        = link_to t('fees_submission_by_course'), action: :fees_submission_batch
       .link-descr= t('fees_submit_by_each_course')
-    .link-box
-      .link-heading
-        = link_to "#{t('fees_submit_for_student')}", :action => "fees_student_search"
-      .link-descr= t('submitting_fees_by_search')
+    / .link-box
+    /   .link-heading
+    /     = link_to t('fees_submit_for_student'), action: :fees_student_search
+    /   .link-descr= t('submitting_fees_by_search')

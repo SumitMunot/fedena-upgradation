@@ -33,22 +33,18 @@
           = t('select_courses')
           \:
         .text-input-bg
-          = select :fees_defaulters, :course_id, @courses.map { |c| [c.full_name, c.id] },                            |
-            {:prompt => "#{t('select_courses')}"},                                                                    |
-            {:onChange => "#{remote_function(:url => {:action => "update_batches"}, :with => "'course_id='+value")}"} |
+          = select :fees_defaulters, :course_id, @courses.map { |c| [c.full_name, c.id] }, { prompt: t('select_courses') }, { onChange: "onChangeRequest(this, '#{url_for(action: :update_batches, id: 'paramid')}')"}
       .label-field-pair
         %label
           = t('select_batch')
           \:
         #batches_list.text-input-bg
-          = select :fees_defaulters, :batch_id, @batchs.map { |b| [b.full_name, b.id] },                                                      |
-            {:prompt => "#{t('select_batch')}"},                                                                                              |
-            {:onChange => "#{remote_function(:url => {:action => "update_fees_collection_dates_defaulters"}, :with => "'batch_id='+value")}"} |
+          = select :fees_defaulters, :batch_id, @batchs.map { |b| [b.full_name, b.id] }, { prompt: t('select_batch')}, { onChange: "onChangeRequest(this, '#{url_for(action: :update_fees_collection_dates_defaulters, id: 'paramid')}')" }
       .label-field-pair
         %label
           = t('select_fee_collection_date')
           \:
         .text-input-bg
           #fees_collection_dates
-            = render :partial => "fees_collection_dates_defaulters"
+            = render partial: 'fees_collection_dates_defaulters'
       #student

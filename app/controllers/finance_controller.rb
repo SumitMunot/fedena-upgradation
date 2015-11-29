@@ -1217,15 +1217,16 @@ class FinanceController < ApplicationController
         flash[:notice] = t('flash_msg33')
         redirect_to :action => 'fee_collection_new'
       else
-        render :action => 'fee_collection_new'
+        render layout: 'application', action: :fee_collection_new
       end
     else
-      redirect_to :action => 'fee_collection_new'
+      redirect_to action: :fee_collection_new
     end
   end
 
   def fee_collection_view
     @batchs = Batch.active
+    render layout: 'application'
   end
 
   def fee_collection
@@ -1235,8 +1236,9 @@ class FinanceController < ApplicationController
   def fee_collection_dates_batch
     @batch= Batch.find(params[:id])
     @finance_fee_collections = @batch.fee_collection_dates
-    render :update do |page|
-      page.replace_html 'fee_collection_dates', :partial => 'fee_collection_dates_batch'
+    respond_to do |format|
+      format.html{ render layout: 'application'}
+      format.js
     end
   end
 
@@ -1300,6 +1302,10 @@ class FinanceController < ApplicationController
   def fees_submission_batch
     @batches = Batch.active
     @dates = []
+  end
+
+  def fees_submission_index
+    render layout: 'application'
   end
 
   def update_fees_collection_dates
@@ -1662,6 +1668,10 @@ class FinanceController < ApplicationController
     render layout: false
   end
 
+  def fees_student_structure_search
+    render layout: 'application'
+  end
+
   def fees_structure_dates
     @student = Student.find(params[:id])
     #@dates = @student.batch.fee_collection_dates
@@ -1707,6 +1717,7 @@ class FinanceController < ApplicationController
     @courses = Course.active
     @batchs = []
     @dates = []
+    render layout: 'application'
   end
 
   def update_batches

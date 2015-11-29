@@ -26,29 +26,24 @@
   - unless flash[:notice].nil?
     %p.flash-msg= flash[:notice]
   #search_box_bg
-    %form{:action => "", :name => "search_form", :style => "display:inline;"}
+    %form{ action: "", name: :search_form, style: "display:inline;"}
       %label{:for => "user_name"}
         = t('search_text')
-        = image_tag("loader.gif",     |
-          :align => "absmiddle",      |
-          :border => 0,               |
-          :id => "loader",            |
-          :style =>"display: none;" ) |
+        = image_tag("loader.gif", align: :absmiddle, border: 0, id: :loader, style: "display: none;")
       #search_textbox
-        = text_field_tag("query", params['query'], :autocomplete => 'off')
+        = text_field_tag("query", params['query'], autocomplete: :off)
         %br/
-  :javascript
-    function fees_student_structure_search_logic(){
-          if ($('query').value.include("%")) return;
-    #{"\#{remote_function(:url => {:action => "fees_student_structure_search_logic"},
-    :with =>  "'query='+ $('query').value",
-    :before => "Element.show('loader')",
-    :success => "Element.hide('loader')",
-    :update=>"information"
-    )}"}
-      }
-
-      document.observe("dom:loaded", function() {
-        new Form.Element.Observer('query', 1,fees_student_structure_search_logic);
-      });
   #information
+
+/ :javascript
+/     function fees_student_structure_search_logic(){
+/       if ($('query').value.include("%")) return;
+/       #{"\#{remote_function(:url => {:action => "fees_student_structure_search_logic"},
+/       :with =>  "'query='+ $('#query').value",
+/       :update=>"information"
+/       )}"}
+/     }
+
+/     $.observe("dom:loaded", function() {
+/       new Form.Element.Observer('#query', 1,fees_student_structure_search_logic);
+/     });

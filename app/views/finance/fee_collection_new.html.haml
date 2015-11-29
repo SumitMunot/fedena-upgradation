@@ -30,8 +30,9 @@
   - unless flash[:notice].nil?
     %p.flash-msg
       = flash[:notice]
-  = form_for @finance_fee_collection, url: {action: :fee_collection_create} do |form|
-    #form-errors= error_messages_for 'finance_fee_collection'
+  = form_for @finance_fee_collection, url: { action: :fee_collection_create } do |form|
+    #form-errors
+      = error_messages_for 'finance_fee_collection'
     #left-side-inputs
       .label-field-pair
         %label{:for => "reason"}
@@ -40,28 +41,29 @@
         .text-input-bg
           = form.select(:fee_category_id, @fee_categories.map { |item| [item.name, item.name] }, {selected: @fee_category.present? ? @fee_category.first.name : nil , prompt: t('select_category')}, {onchange: "onChangeRequest(this, '#{url_for(action: :fee_collection_batch_update, id: 'paramid')}')"})
       .label-field-pair
-        %label{:for => "reason"}
+        %label{ for: :reason}
           = t('fee_collection_name')
           \:
         .text-input-bg= form.text_field :name
       .label-field-pair
-        %label{:for => "reason"}
+        %label{ for:  :reason }
           = t('start_date')
           \:
-        .text-input-bg= date_select 'finance_fee_collection[start_date]', I18n.l(@finance_fee_collection.start_date || Date.today,:format=>:default),:popup=>"force"
+        .text-input-bg
+          = form.text_field :start_date, value: I18n.l(@finance_fee_collection.start_date || Date.today, format: :default), popup: :force, class: :datepicker
       .label-field-pair
-        %label{:for => "reason"}
+        %label{ for: :reason}
           = t('end_date')
           \:
-        .text-input-bg= date_select 'finance_fee_collection[end_date]',I18n.l(@finance_fee_collection.end_date || Date.today,:format=>:default), :popup=>"force"
+        .text-input-bg= form.text_field :end_date, value: I18n.l(@finance_fee_collection.end_date || Date.today, format: :default), popup: :force, class: :datepicker
       .label-field-pair
         %label{:for => "reason"}
           = t('due_date')
           \:
-        .text-input-bg= date_select 'finance_fee_collection[due_date]', I18n.l(@finance_fee_collection.due_date || Date.today,:format=>:default), :popup=>"force"
+        .text-input-bg= form.text_field :due_date, value: I18n.l(@finance_fee_collection.due_date || Date.today, format: :default), popup: :force
     #batchs
       - unless params[:fee_collection].nil?
-        = render :partial=>'fee_collection_batchs' if params[:fee_collection][:category_ids].present?
+        = render partial: 'fee_collection_batchs' if params[:fee_collection][:category_ids].present?
     .extender
     #submit-button
-      = submit_tag "► #{t('create_text')}",:class=>'submit_button'
+      = submit_tag "► #{t('create_text')}", class: :submit_button

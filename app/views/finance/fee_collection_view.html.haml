@@ -32,8 +32,6 @@
         = t('select_batch')
         \:
       .text-input-bg
-        = select("id",:id,@batchs.map { |c| [c.full_name, c.id] },                                                        |
-          {:prompt => "#{t('select_batch')}"},                                                                            |
-          {:onChange => "#{remote_function(:url => {:action => "fee_collection_dates_batch"}, :with => "'id='+value")}"}) |
+        = select("id",:id, @batchs.map { |c| [c.full_name, c.id] }, { prompt: t('select_batch')}, { onChange: "onChangeRequest(this, '#{url_for(action: :fee_collection_dates_batch, id: 'paramid')}')"})
   #fee_collection_dates
   #modal-box{:style => "display:none;"}
