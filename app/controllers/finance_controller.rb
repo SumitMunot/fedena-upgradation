@@ -362,7 +362,7 @@ class FinanceController < ApplicationController
 
   def salary_department
     month_date
-    @departments = EmployeeDepartment.find(:all)
+    @departments = EmployeeDepartment.all
   end
 
   def salary_employee
@@ -1318,7 +1318,7 @@ class FinanceController < ApplicationController
 
   def load_fees_submission_batch
     @batch   = Batch.find(params[:batch_id])
-    @dates   = FinanceFeeCollection.find(:all)
+    @dates   = FinanceFeeCollection.all
     @date    =  @fee_collection = FinanceFeeCollection.find(params[:date])
     @student = Student.find(params[:student]) if params[:student]
     @fee = FinanceFee.joins(:student).where(fee_collection_id: @date.id).first
@@ -1359,7 +1359,7 @@ class FinanceController < ApplicationController
   def update_ajax
 
     @batch   = Batch.find(params[:batch_id])
-    @dates = FinanceFeeCollection.find(:all)
+    @dates = FinanceFeeCollection.all
     @date = @fee_collection = FinanceFeeCollection.find(params[:date])
     @student = Student.find(params[:student]) if params[:student]
     @student ||= FinanceFee.joins(:student).where(fee_collection_id: @date.id).first.try(:student)
@@ -1468,7 +1468,7 @@ class FinanceController < ApplicationController
   def update_fine_ajax
     if request.post?
       @batch   = Batch.find(params[:fine][:batch_id])
-      @dates = FinanceFeeCollection.find(:all)
+      @dates = FinanceFeeCollection.all
       @date = @fee_collection = FinanceFeeCollection.find(params[:fine][:date])
       @student = Student.find(params[:fine][:student]) if params[:fine][:student]
       @student ||= FinanceFee.joins(:student).where(fee_collection_id: @date.id).first.student
@@ -1862,14 +1862,14 @@ class FinanceController < ApplicationController
     @other_transaction_categories2 = FinanceTransaction.where("transaction_date >= ? AND transaction_date <= ? AND category_id NOT IN (?)", @start_date2, @end_date2, @fixed_cat_ids).order('transaction_date').paginate(params[:page]).map{|ft| ft.category}.uniq
     #    @transactions_fees = FinanceTransaction.total_fees(@start_date,@end_date)
     @transactions_fees2 = FinanceTransaction.total_fees(@start_date2,@end_date2)
-    employees = Employee.find(:all)
+    employees = Employee.all
     @salary = Employee.total_employees_salary(employees, @start_date, @end_date)
     @salary2 = Employee.total_employees_salary(employees, @start_date2, @end_date2)
     @donations_total = FinanceTransaction.donations_triggers(@start_date,@end_date)
     @donations_total2 = FinanceTransaction.donations_triggers(@start_date2,@end_date2)
     @transactions_fees = FinanceTransaction.total_fees(@start_date,@end_date)
     @transactions_fees2 = FinanceTransaction.total_fees(@start_date2,@end_date2)
-    @batchs = Batch.find(:all)
+    @batchs = Batch.all
     @grand_total = FinanceTransaction.grand_total(@start_date,@end_date)
     @grand_total2 = FinanceTransaction.grand_total(@start_date2,@end_date2)
     @category_transaction_totals = {}
@@ -1931,7 +1931,7 @@ class FinanceController < ApplicationController
 
     start_date = (params[:start_date]).to_date
     end_date = (params[:end_date]).to_date
-    employees = Employee.find(:all)
+    employees = Employee.all
 
     hr = Settings.find_by_config_value("HR")
     donations_total = FinanceTransaction.donations_triggers(start_date,end_date)
@@ -2040,7 +2040,7 @@ class FinanceController < ApplicationController
     end_date = (params[:end_date]).to_date
     start_date2 = (params[:start_date2]).to_date
     end_date2 = (params[:end_date2]).to_date
-    employees = Employee.find(:all)
+    employees = Employee.all
 
     hr = Settings.find_by_config_value("HR")
     donations_total = FinanceTransaction.donations_triggers(start_date,end_date)
@@ -2193,7 +2193,7 @@ class FinanceController < ApplicationController
 
     start_date = (params[:start_date]).to_date
     end_date = (params[:end_date]).to_date
-    employees = Employee.find(:all)
+    employees = Employee.all
 
     hr = Settings.find_by_config_value("HR")
     donations_total = FinanceTransaction.donations_triggers(start_date,end_date)

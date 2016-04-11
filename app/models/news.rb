@@ -30,8 +30,8 @@
 
 class News < ActiveRecord::Base
 
-  belongs_to :author, :class_name => 'User'
-  has_many :comments, :class_name => 'NewsComment'
+  belongs_to :author, class_name: :User
+  has_many :comments, class_name: :NewsComment
   after_save :reload_news_bar
   after_destroy :reload_news_bar
 
@@ -44,7 +44,7 @@ class News < ActiveRecord::Base
   @@per_page = 12
 
   def self.get_latest
-      News.limit(3)
+    News.limit(3)
   end
 
   def reload_news_bar

@@ -44,9 +44,7 @@
 
 class ArchivedGuardian < ActiveRecord::Base
   belongs_to :country
-  belongs_to :ward, :class_name => 'ArchivedStudent'
-
-
+  belongs_to :ward, class_name: 'ArchivedStudent'
 
   def full_name
     "#{first_name} #{last_name}"

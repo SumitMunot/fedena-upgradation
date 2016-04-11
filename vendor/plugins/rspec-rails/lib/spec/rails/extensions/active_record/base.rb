@@ -11,7 +11,7 @@ if defined?(ActiveRecord::Base)
             #
             # Extension to enhance <tt>should have</tt> on AR Model classes
             def records
-              find(:all)
+              all
             end
             alias :record :records
           end
@@ -35,7 +35,7 @@ if defined?(ActiveRecord::Base)
       end
     end
   end
-  
+
   module ActiveRecord #:nodoc:
     class Base
       extend  Spec::Rails::Extensions::ActiveRecord::ClassMethods

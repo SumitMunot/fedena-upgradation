@@ -977,8 +977,7 @@ class ExamController < ApplicationController
           @exam_groups.push ExamGroup.find(x.exam_group_id)
         end
       else
-        @exam_groups = ExamGroup.where(:batch_id => @batch.id)
-        @exam_groups.reject!{|e| e.result_published==false}
+        @exam_groups = ExamGroup.where(:batch_id => @batch.id).where.not(result_published: false)
       end
       general_subjects = Subject.where("batch_id = ? and elective_group_id IS ? AND is_deleted= ?", @batch.id, nil, false)
       student_electives = StudentsSubject.where("student_id = ? and batch_id = ?", @student.id, @batch.id)
@@ -1052,8 +1051,7 @@ class ExamController < ApplicationController
       subject_ids = exams.collect(&:subject_id)
       @subjects.to_a.reject!{|sub| !(subject_ids.include?(sub.id))}
     end
-    render :pdf => 'generated_report4_pdf',
-      :orientation => 'Landscape'
+    render pdf: :generated_report4_pdf, orientation: :Landscape, layout: 'pdf'
     #    respond_to do |format|
     #      format.pdf { render :layout => false }
     #    end

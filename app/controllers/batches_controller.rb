@@ -177,8 +177,8 @@ class BatchesController < ApplicationController
 
   def assign_tutor
     @batch = Batch.find_by_id(params[:id])
-    @assigned_employee = @batch.employee_id.split(",") unless @batch.employee_id.nil?
-    @departments = EmployeeDepartment.find(:all)
+    @assigned_employee = @batch.employee_id.split(",") unless @batch.employee_id.blank?
+    @departments = EmployeeDepartment.all
   end
 
   def update_employees
@@ -233,7 +233,7 @@ class BatchesController < ApplicationController
     @batch = Batch.find params[:id] if ['show', 'edit', 'update', 'delete'].include? action_name
     @course = Course.find params[:course_id]
   end
-  
+
   def batch_params
     params.require(:batch).permit(:course_id, :is_active, :is_deleted, :start_date, :end_date, :name) if params[:batch]
   end

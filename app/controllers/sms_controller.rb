@@ -158,7 +158,7 @@ class SmsController < ApplicationController
         end
       end
     end
-    emp_departments = EmployeeDepartment.find(:all)
+    emp_departments = EmployeeDepartment.all
     emp_departments.each do |dept|
       dept_employees = dept.employees
       dept_employees.each do |employee|
@@ -209,7 +209,7 @@ class SmsController < ApplicationController
   end
 
   def departments
-    @departments = EmployeeDepartment.find(:all)
+    @departments = EmployeeDepartment.all
     if request.post?
       unless params[:send_sms][:dept_ids].nil?
         dept_ids = params[:send_sms][:dept_ids]

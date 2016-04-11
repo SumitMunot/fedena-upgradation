@@ -31,7 +31,7 @@ class RemindersController < ApplicationController
 
   def create_reminder
     @user = current_user
-    @departments = EmployeeDepartment.find(:all)
+    @departments = EmployeeDepartment.all
     @new_reminder_count = Reminder.where(recipient: @user.id, is_read: false)
     unless params[:send_to].nil?
       recipients_array = params[:send_to].split(",").collect{ |s| s.to_i }

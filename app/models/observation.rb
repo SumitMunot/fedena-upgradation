@@ -30,18 +30,24 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 class Observation < ActiveRecord::Base
-  belongs_to  :observation_group
-  has_many    :descriptive_indicators,  :as=>:describable
-  has_many    :assessment_scores, :through=>:descriptive_indicators
+
+  belongs_to :observation_group
+
+  has_many :descriptive_indicators, as: :describable
+  has_many :assessment_scores, through: :descriptive_indicators
+  has_many :cce_reports, as: :observable
+  has_many :observations, through: :observation_group
+
+  has_one :next_record ->(obj) { observations.where('order > ?', obj.order) }
+
   accepts_nested_attributes_for :descriptive_indicators
-  has_many    :cce_reports, :as=>:observable
 
   default_scope { order('sort_order ASC')}
   scope :active, -> { where(is_active: true)}
 
-  def next_record
-    observation_group.observations.where('order > ?',order).first
-  end
+  # def next_record
+  #   .first
+  # end
   def prev_record
     observation_group.observations.where('order < ?',order).last
   end

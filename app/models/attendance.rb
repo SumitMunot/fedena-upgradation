@@ -35,7 +35,7 @@ class Attendance < ActiveRecord::Base
   belongs_to :batch
 
   validates_presence_of :reason,:month_date,:batch_id,:student_id
-  validates_uniqueness_of :student_id, :scope => [:month_date],:message=>"already marked as absent"
+  validates_uniqueness_of :student_id, scope: [:month_date], message: 'already marked as absent'
   scope :by_month, -> (d) { where(month_date: d.beginning_of_month..d.end_of_month ) }
   scope :by_month_and_batch, -> (d,b) { where( month_date: d.beginning_of_month..d.end_of_month, batch_id: b ) }
   #validate :student_current_batch
@@ -45,7 +45,7 @@ class Attendance < ActiveRecord::Base
       if self.student.batch_id == self.batch_id
         return true
       else
-        errors.add(:batch_id,"attendance is not marked for present batch")
+        errors.add(:batch_id, 'attendance is not marked for present batch')
         return false
       end
     end
@@ -60,11 +60,11 @@ class Attendance < ActiveRecord::Base
   end
 
   def is_full_day
-    forenoon == true and afternoon == true
+    forenoon && afternoon
   end
 
   def is_half_day
-    forenoon == true or afternoon == true
+    forenoon || afternoon
   end
 
 end

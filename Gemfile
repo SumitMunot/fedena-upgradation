@@ -69,7 +69,7 @@ group :test do
   gem 'shoulda'
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'capybara-webkit'
+  # gem 'capybara-webkit'
 
   # build server runs tests in parallel
   gem 'parallel_tests'

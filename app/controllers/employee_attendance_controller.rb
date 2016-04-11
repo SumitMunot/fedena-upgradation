@@ -386,7 +386,7 @@ class EmployeeAttendanceController < ApplicationController
 
   def all_employee_new_leave_applications
     @employee = Employee.find(params[:id])
-    @all_employees = Employee.find(:all)
+    @all_employees = Employee.all
     render :partial => "all_employee_new_leave_applications"
   end
 
@@ -451,7 +451,7 @@ class EmployeeAttendanceController < ApplicationController
     end
     render :pdf => 'employee_attendance_pdf'
   end
-  
+
   def leave_type_params
     params.require(:leave_type).permit(:name, :code, :max_leave_count,:status, :carry_forward) if params[:leave_type]
   end

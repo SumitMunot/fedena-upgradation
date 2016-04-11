@@ -99,15 +99,17 @@ class StudentAttendanceController < ApplicationController
       else
         return
       end
-
+    else
+      render layout: 'application'
     end
+
 
   end
 
   def month
     @month = params[:mode]
     if params[:mode] == 'Monthly'
-      @year = Date.today.year      
+      @year = Date.today.year
     end
   end
 

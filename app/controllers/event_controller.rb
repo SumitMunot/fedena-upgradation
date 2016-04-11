@@ -19,7 +19,7 @@
 class EventController < ApplicationController
   before_filter :login_required
   filter_access_to :all
-  
+
   def index
     params[:events][:start_date] = Date.civil(*params[:events][:start_date].sort.map(&:last).map(&:to_i)) if params[:events]
     params[:events][:end_date] = Date.civil(*params[:events][:end_date].sort.map(&:last).map(&:to_i)) if params[:events]
@@ -36,7 +36,7 @@ class EventController < ApplicationController
         #      if params[:events][:is_common] == "0" and @events.save
         redirect_to :action=>"show", :id=>@events.id
         #      else
-        #        @users = User.find(:all)
+        #        @users = User.all
         #        @users.each do |u|
         #          Reminder.create(:sender=> current_user.id,:recipient=>u.id,
         #            :subject=>"New Event : #{params[:events][:title]}",
@@ -254,7 +254,7 @@ class EventController < ApplicationController
     batch_event = BatchEvent.where("event_id = #{params[:id]}")
     dept_event = EmployeeDepartmentEvent.where("event_id = #{params[:id]}")
     event.destroy
-    
+
     batch_event.each { |x| x.destroy } unless batch_event.nil?
     dept_event.each { |x| x.destroy } unless dept_event.nil?
     flash[:notice] ="#{t('event.flash3')}"
@@ -267,7 +267,7 @@ class EventController < ApplicationController
       redirect_to :action=>"show", :id=>@events.id, :cmd=>'edit'
     end
   end
-  
+
   def event_params
     params.require(:events).permit(:title, :description, :start_date, :end_date, :is_common,:is_holiday, :is_exam, :is_due, :origin_id, :origin_type) if params[:events]
   end

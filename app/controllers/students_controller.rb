@@ -586,14 +586,15 @@ class StudentsController < ApplicationController
     @current_user = current_user
     @student = Student.find(params[:id])
     @address = @student.address_line1.to_s + ' ' + @student.address_line2.to_s
-    @additional_fields = StudentAdditionalField.where(:status => true)
+    @additional_fields = StudentAdditionalField.where(status: true)
     @sms_module = Settings.available_modules
     @sms_setting = SmsSetting.new
     @previous_data = StudentPreviousData.find_by_student_id(@student.id)
-    @immediate_contact = Guardian.find(@student.immediate_contact_id) \
-      unless @student.immediate_contact_id.nil? or @student.immediate_contact_id == ''
+    unless @student.immediate_contact_id.blank?
+      @immediate_contact = Guardian.find(@student.immediate_contact_id)
+    end
 
-    render :pdf=>'profile_pdf'
+    render pdf: :profile_pdf
   end
 
   def show_previous_details
@@ -611,6 +612,7 @@ class StudentsController < ApplicationController
 
   def guardians
     @parents = @student.guardians
+    render layout: 'application'
   end
 
   def del_guardian
